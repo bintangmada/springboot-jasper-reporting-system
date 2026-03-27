@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Employees — Jasper Report System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<div th:replace="~{fragments/layout :: navbar(activePage='employees')}"></div>
+
+<main class="main-content animate-in">
+    <div class="page-header">
+        <h1>👥 Employee Data</h1>
+        <p>Complete list of all registered employees</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-value" th:text="${#lists.size(employees)}">0</div>
+            <div class="stat-label">Total Employees</div>
+        </div>
+        <div class="stat-card">
+            <a th:href="@{/reports}" style="text-decoration:none; color:inherit;">
+                <div class="stat-value">📊</div>
+                <div class="stat-label">Export Report →</div>
+            </a>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>No</th>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Position</th>
+                <th>Salary (IDR)</th>
+                <th>Join Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="emp, stat : ${employees}">
+                <td th:text="${stat.index + 1}">1</td>
+                <td th:text="${emp.employeeCode}">EMP001</td>
+                <td th:text="${emp.name}">Name</td>
+                <td>
+                    <span class="badge"
+                          th:classappend="${emp.department == 'Engineering'} ? 'badge-engineering' :
+                                          (${emp.department == 'Human Resources'} ? 'badge-hr' :
+                                          (${emp.department == 'Finance'} ? 'badge-finance' :
+                                          (${emp.department == 'Marketing'} ? 'badge-marketing' : 'badge-operations')))"
+                          th:text="${emp.department}">Dept</span>
+                </td>
+                <td th:text="${emp.position}">Position</td>
+                <td class="salary" th:text="${#numbers.formatDecimal(emp.salary, 0, 'COMMA', 0, 'POINT')}">0</td>
+                <td th:text="${#temporals.format(emp.joinDate, 'dd MMM yyyy')}">01 Jan 2024</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+
+</body>
+</html>

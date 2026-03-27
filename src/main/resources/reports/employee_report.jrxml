@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+              http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="employee_report"
+              pageWidth="842"
+              pageHeight="595"
+              orientation="Landscape"
+              columnWidth="802"
+              leftMargin="20"
+              rightMargin="20"
+              topMargin="20"
+              bottomMargin="20">
+
+    <!-- Parameters -->
+    <parameter name="reportTitle" class="java.lang.String"/>
+    <parameter name="generatedDate" class="java.lang.String"/>
+
+    <!-- Fields matching Employee entity -->
+    <field name="employeeCode" class="java.lang.String"/>
+    <field name="name" class="java.lang.String"/>
+    <field name="department" class="java.lang.String"/>
+    <field name="position" class="java.lang.String"/>
+    <field name="salary" class="java.math.BigDecimal"/>
+    <field name="joinDate" class="java.time.LocalDate"/>
+
+    <!-- Variables -->
+    <variable name="totalSalary" class="java.math.BigDecimal" calculation="Sum">
+        <variableExpression><![CDATA[$F{salary}]]></variableExpression>
+    </variable>
+    <variable name="rowNumber" class="java.lang.Integer" calculation="Count">
+        <variableExpression><![CDATA[Boolean.TRUE]]></variableExpression>
+    </variable>
+
+    <!-- Title Band -->
+    <title>
+        <band height="80">
+            <staticText>
+                <reportElement x="0" y="0" width="802" height="35"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="18" isBold="true"/>
+                </textElement>
+                <text><![CDATA[EMPLOYEE REPORT]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="0" y="35" width="802" height="20"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="11"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{reportTitle}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="55" width="802" height="20"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="9" isItalic="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Generated: " + $P{generatedDate}]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+
+    <!-- Column Header -->
+    <columnHeader>
+        <band height="30">
+            <staticText>
+                <reportElement mode="Opaque" x="0" y="0" width="50" height="30" backcolor="#4472C4"/>
+                <box>
+                    <pen lineWidth="0.5" lineColor="#FFFFFF"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[No]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="50" y="0" width="90" height="30" backcolor="#4472C4"/>
+                <box>
+                    <pen lineWidth="0.5" lineColor="#FFFFFF"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Code]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="140" y="0" width="162" height="30" backcolor="#4472C4"/>
+                <box>
+                    <pen lineWidth="0.5" lineColor="#FFFFFF"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Name]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="302" y="0" width="130" height="30" backcolor="#4472C4"/>
+                <box>
+                    <pen lineWidth="0.5" lineColor="#FFFFFF"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Department]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="432" y="0" width="130" height="30" backcolor="#4472C4"/>
+                <box>
+                    <pen lineWidth="0.5" lineColor="#FFFFFF"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Position]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="562" y="0" width="120" height="30" backcolor="#4472C4"/>
+                <box>
+                    <pen lineWidth="0.5" lineColor="#FFFFFF"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Salary (IDR)]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="682" y="0" width="120" height="30" backcolor="#4472C4"/>
+                <box>
+                    <pen lineWidth="0.5" lineColor="#FFFFFF"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Join Date]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <!-- Detail Band -->
+    <detail>
+        <band height="25">
+            <textField>
+                <reportElement x="0" y="0" width="50" height="25"/>
+                <box>
+                    <pen lineWidth="0.25" lineColor="#CCCCCC"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$V{rowNumber}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="50" y="0" width="90" height="25"/>
+                <box>
+                    <pen lineWidth="0.25" lineColor="#CCCCCC"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{employeeCode}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="140" y="0" width="162" height="25"/>
+                <box leftPadding="5">
+                    <pen lineWidth="0.25" lineColor="#CCCCCC"/>
+                </box>
+                <textElement verticalAlignment="Middle">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="302" y="0" width="130" height="25"/>
+                <box leftPadding="5">
+                    <pen lineWidth="0.25" lineColor="#CCCCCC"/>
+                </box>
+                <textElement verticalAlignment="Middle">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{department}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="432" y="0" width="130" height="25"/>
+                <box leftPadding="5">
+                    <pen lineWidth="0.25" lineColor="#CCCCCC"/>
+                </box>
+                <textElement verticalAlignment="Middle">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{position}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0">
+                <reportElement x="562" y="0" width="120" height="25"/>
+                <box rightPadding="5">
+                    <pen lineWidth="0.25" lineColor="#CCCCCC"/>
+                </box>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{salary}]]></textFieldExpression>
+            </textField>
+            <textField pattern="dd-MM-yyyy">
+                <reportElement x="682" y="0" width="120" height="25"/>
+                <box>
+                    <pen lineWidth="0.25" lineColor="#CCCCCC"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA[java.sql.Date.valueOf($F{joinDate})]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+    <!-- Summary Band -->
+    <summary>
+        <band height="40">
+            <staticText>
+                <reportElement mode="Opaque" x="0" y="5" width="562" height="30" backcolor="#E2EFDA"/>
+                <box rightPadding="10">
+                    <pen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="11" isBold="true"/>
+                </textElement>
+                <text><![CDATA[TOTAL SALARY:]]></text>
+            </staticText>
+            <textField pattern="#,##0">
+                <reportElement mode="Opaque" x="562" y="5" width="120" height="30" backcolor="#E2EFDA"/>
+                <box rightPadding="5">
+                    <pen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="11" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$V{totalSalary}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement mode="Opaque" x="682" y="5" width="120" height="30" backcolor="#E2EFDA"/>
+                <box>
+                    <pen lineWidth="0.5"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="9"/>
+                </textElement>
+                <text><![CDATA[]]></text>
+            </staticText>
+        </band>
+    </summary>
+
+    <!-- Page Footer -->
+    <pageFooter>
+        <band height="25">
+            <textField>
+                <reportElement x="350" y="0" width="100" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+
+</jasperReport>
